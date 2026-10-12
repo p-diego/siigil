@@ -1,0 +1,71 @@
+{
+  "groups": [
+    {
+      "layers": [
+        {
+          "image-name": "moon.fill.svg",
+          "name": "moon.fill",
+          "position": {
+            "scale": 5.8,
+            "translation-in-points": [
+              0,
+              0
+            ]
+          },
+          "fill-specializations": [
+            {
+              "value": {
+                "linear-gradient": [
+                  "extended-srgb:1.00000,1.00000,1.00000,1.00000",
+                  "extended-srgb:0.90000,0.90000,0.93000,1.00000"
+                ]
+              }
+            },
+            {
+              "appearance": "dark",
+              "value": {
+                "linear-gradient": [
+                  "extended-srgb:1.00000,1.00000,1.00000,1.00000",
+                  "extended-srgb:0.88000,0.88000,0.91000,1.00000"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "shadow": {
+        "kind": "neutral",
+        "opacity": 0.5
+      },
+      "translucency": {
+        "enabled": true,
+        "value": 0.1
+      }
+    }
+  ],
+  "supported-platforms": {
+    "circles": [
+      "watchOS"
+    ],
+    "squares": "shared"
+  },
+  "fill-specializations": [
+    {
+      "value": {
+        "linear-gradient": [
+          "extended-srgb:0.53000,0.52400,0.82400,1.00000",
+          "extended-srgb:0.37000,0.36400,0.66400,1.00000"
+        ]
+      }
+    },
+    {
+      "appearance": "dark",
+      "value": {
+        "linear-gradient": [
+          "extended-srgb:0.35000,0.34500,0.59500,1.00000",
+          "extended-srgb:0.23000,0.22500,0.47500,1.00000"
+        ]
+      }
+    }
+  ]
+}
