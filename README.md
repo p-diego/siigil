@@ -2,7 +2,7 @@
 
 **A bar that sits alongside the macOS menu bar, adds what it's missing and keeps your space tidy.**
 
-https://github.com/user-attachments/assets/d6349192-178d-4b04-9179-1ac53fec10c6
+https://github.com/user-attachments/assets/e9af5ffe-626a-4e45-acff-e1cf709bb3da
 
 **[Download Siigil](https://github.com/p-diego/siigil/releases/latest)** · macOS 26
 
