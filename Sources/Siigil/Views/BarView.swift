@@ -159,7 +159,6 @@ struct BarView: View {
                                   onDrag: reduced ? { _, _ in } : { app, v in dragIcon(app, from: name, v) },
                                   onDrop: reduced ? { _ in } : dropIcon)
                         .onGeometryChange(for: CGRect.self) { $0.frame(in: .named("bar")) } action: { pillFrames[name] = $0 }
-                        .onDisappear { pillFrames[name] = nil }
                         .transition(.blurReplace)
                 }
             }
@@ -210,8 +209,14 @@ struct BarView: View {
         return (l.left, l.right, beside)
     }
 
+    // Le cornici degli spazi che ci sono adesso. Mai azzerate a onDisappear: nel passaggio allo sfondo unito (e ritorno) la
+    // fila vecchia e quella nuova convivono per la transizione con le stesse chiavi, e l'onDisappear della vecchia cancellava
+    // le misure della nuova — il primo spazio, che nessuno rimisura, non riceveva più niente (16/10). Lo stesso modello delle
+    // cornici dei widget (place): filtrate al momento dell'uso, così uno spazio sparito non cattura rilasci.
+    private var livePillFrames: [String: CGRect] { pillFrames.filter { f in state.reports.contains { $0.workspace.name == f.key } } }
+
     // La pillola su cui cadrebbe l'icona trascinata (bordo bianco), nil se nessuna.
-    private var iconTarget: String? { iconDrag.flatMap { iconDropTarget(at: $0.location, from: $0.from, pills: pillFrames) } }
+    private var iconTarget: String? { iconDrag.flatMap { iconDropTarget(at: $0.location, from: $0.from, pills: livePillFrames) } }
 
     // Il gesto dell'icona parte qui al primo movimento oltre i 4 pt. Con ⌘ premuto è il ⌘-trascina del gruppo: niente.
     // Un gesto di un'altra finestra riparte da capo (la precedente può essere ancora appesa nel ritorno a vuoto).
@@ -228,7 +233,7 @@ struct BarView: View {
     // come dopo ogni azione. Altrove: la copia torna al punto di presa e sparisce.
     private func dropIcon(_ v: DragGesture.Value) {
         guard let d = iconDrag else { return }
-        if let to = iconDropTarget(at: v.location, from: d.from, pills: pillFrames) {
+        if let to = iconDropTarget(at: v.location, from: d.from, pills: livePillFrames) {
             iconDrag = nil
             moveWindow(id: d.app.windowID, to: to, follow: d.app.windowID == state.frontWindow)
         } else {
